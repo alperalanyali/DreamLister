@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14133" systemVersion="17E199" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="AppImage" representedClassName="AppImage" syncable="YES">
+        <attribute name="itemimage" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <relationship name="toItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppItem" inverseName="toImage" inverseEntity="AppItem" syncable="YES"/>
+        <relationship name="toStore" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AppStore" inverseName="toImage" inverseEntity="AppStore" syncable="YES"/>
+    </entity>
+    <entity name="AppItem" representedClassName="AppItem" syncable="YES">
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppImage" inverseName="toItem" inverseEntity="AppImage" syncable="YES"/>
+        <relationship name="toItemType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppItemType" inverseName="toItem" inverseEntity="AppItemType" syncable="YES"/>
+        <relationship name="toStore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppStore" inverseName="toItem" inverseEntity="AppStore" syncable="YES"/>
+    </entity>
+    <entity name="AppItemType" representedClassName="AppItemType" syncable="YES">
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppItem" inverseName="toItemType" inverseEntity="AppItem" syncable="YES"/>
+    </entity>
+    <entity name="AppStore" representedClassName="AppStore" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="toImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppImage" inverseName="toStore" inverseEntity="AppImage" syncable="YES"/>
+        <relationship name="toItem" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="AppItem" inverseName="toStore" inverseEntity="AppItem" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="AppItem" positionX="-27" positionY="18" width="128" height="148"/>
+        <element name="AppItemType" positionX="279" positionY="80" width="128" height="73"/>
+        <element name="AppStore" positionX="16" positionY="407" width="128" height="88"/>
+        <element name="AppImage" positionX="-254" positionY="225" width="128" height="88"/>
+    </elements>
 </model>
