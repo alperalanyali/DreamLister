@@ -14,6 +14,10 @@ class MainVC: UIViewController,UITableViewDelegate, UITableViewDataSource, NSFet
 
     @IBOutlet weak var segment: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    @IBAction func segmentChanged(_ sender: Any) {
+        attemptFetch()
+        tableView.reloadData()
+    }
     
     var controller: NSFetchedResultsController<AppItem>!
     
@@ -21,7 +25,7 @@ class MainVC: UIViewController,UITableViewDelegate, UITableViewDataSource, NSFet
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        generatedTestData()
+    //  generatedTestData()
         attemptFetch()
     
     }
@@ -60,8 +64,21 @@ class MainVC: UIViewController,UITableViewDelegate, UITableViewDataSource, NSFet
     // MARK: Fetch Attempt
     func attemptFetch() {
         let fetchRequest: NSFetchRequest<AppItem> = AppItem.fetchRequest()
+        let fetchRequest2: NSFetchRequest<AppItemType> = AppItemType.fetchRequest()
         let dateSort = NSSortDescriptor(key: "created", ascending: false)
-        fetchRequest.sortDescriptors = [dateSort]
+        let priceSort = NSSortDescriptor(key: "price", ascending: true)
+        let titleSort = NSSortDescriptor(key: "title", ascending: true)
+        let itemTypeSort = NSSortDescriptor(key: "ItemType", ascending: true)
+        if segment.selectedSegmentIndex == 0 {
+                fetchRequest.sortDescriptors = [dateSort]
+        } else if segment.selectedSegmentIndex == 1 {
+            fetchRequest.sortDescriptors = [priceSort]
+        } else if segment.selectedSegmentIndex == 2 {
+            fetchRequest.sortDescriptors = [titleSort]
+        } else if segment.selectedSegmentIndex == 3 {
+            fetchRequest2.sortDescriptors = [itemTypeSort]
+        }
+        
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         controller.delegate = self
         self.controller = controller
@@ -131,10 +148,12 @@ func generatedTestData() {
     item.title = "Macbook Pro"
     item.price = 1800
     item.details = "I can't wait until the September event, I hope they release new MBPs"
+
     let item2 = AppItem(context: context)
     item2.title = "Bose Headphones"
     item2.price = 300
     item2.details = "But man, it's so nice to be able to black out everyone with noise canceling tech."
+    
     let item3 = AppItem(context: context)
     item3.title = "Tesla Model S"
     item3.price = 90000
